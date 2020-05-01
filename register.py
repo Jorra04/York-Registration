@@ -4,7 +4,8 @@ from selenium.webdriver.support.ui import Select
 from creds import user, pw
 
 class YorkRegistration:
-    def __init__(self, username, pw):
+    def __init__(self):
+        self.enrolled = False
         chromePath = r"C:\Users\jorra\Downloads\chromedriver_win32\chromedriver.exe"
         self.driver = webdriver.Chrome(chromePath)
         self.driver.get("https://wrem.sis.yorku.ca/Apps/WebObjects/REM.woa/wa/DirectAction/rem")
@@ -15,8 +16,12 @@ class YorkRegistration:
         sleep(2)
         self.driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/form/div[2]/div[2]/p[2]/input").click()
         sleep(2)
-        # selection_table = Select(self.driver.find_element_by_name("5.5.1.27.1.11.0"))
-        # selection_table.select_by_visible_text("Summer 2020")
+        
+        
+
+        # sleep(100)
+    def enrol(self, username, password):
+        self.driver.get("https://wrem.sis.yorku.ca/Apps/WebObjects/REM.woa/wa/DirectAction/rem")
         sleep(2)
         # name="5.5.1.27.1.11.0"
         Select(self.driver.find_element_by_name('5.5.1.27.1.11.0')).select_by_visible_text("Summer 2020")
@@ -31,6 +36,9 @@ class YorkRegistration:
         sleep(2)
         self.driver.find_element_by_name('5.1.27.11.9').click()
 
-        sleep(100)
-
-YorkRegistration(user, pw)
+yr = YorkRegistration()
+i = 0
+while not yr.enrolled:
+    i+=1
+    print(i)
+    yr.enrol(user,pw)
